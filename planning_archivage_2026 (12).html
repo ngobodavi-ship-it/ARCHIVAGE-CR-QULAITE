@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction Expérience Client &amp; Projets — Planning &amp; Archivage CR 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:#eef1f6;min-height:100vh}
+
+/* NAV WRAPPER */
+.nav-wrapper{position:sticky;top:0;z-index:200;display:flex;justify-content:center;padding:10px 16px;background:#2a3f6f;box-shadow:0 3px 14px rgba(0,0,0,.4)}
+.nav-pill{display:inline-flex;align-items:center;background:#1a2f55;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08)}
+.nav-tab{display:flex;align-items:center;gap:7px;padding:11px 22px;color:rgba(255,255,255,.55);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap;border-right:1px solid rgba(255,255,255,.07)}
+.nav-tab:last-child{border-right:none}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav-tab.active{color:#ffff00;background:rgba(255,255,0,.07);position:relative}
+.nav-tab.active::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:3px;background:#ffff00;border-radius:2px 2px 0 0}
+.nav-tab .tab-ico{font-size:15px}
+.user-pill{display:inline-flex;align-items:center;gap:8px;background:#1a2f55;border-radius:10px;padding:8px 16px;margin-left:10px;border:1px solid rgba(255,255,255,.1)}
+.user-pill-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.5px;text-transform:uppercase}
+.logout-btn{background:rgba(255,80,80,.2);color:#fff;border:1px solid rgba(255,80,80,.45);border-radius:8px;padding:7px 13px;margin-left:8px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.4px;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.logout-btn:hover{background:#c0392b;border-color:#c0392b;color:#fff}
+
+/* SECTIONS */
+.sec{display:none;padding:18px}
+.sec.active{display:block}
+
+/* ─── PLANNING ─── */
+.page-title{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;color:#1f3864;margin-bottom:12px;letter-spacing:1px;text-transform:uppercase}
+.wrapper{overflow-x:auto;border-radius:4px;box-shadow:0 4px 18px rgba(0,0,0,.13);margin-bottom:24px}
+table.ptbl{border-collapse:collapse;min-width:1080px;width:100%;background:#fff}
+table.ptbl th,table.ptbl td{border:1px solid #888;text-align:center;vertical-align:middle;font-family:'Barlow Condensed',sans-serif;font-size:11px;padding:3px 4px;height:29px;white-space:nowrap}
+.row-leg td{background:#e26b0a;color:#fff;font-weight:700}
+.lbl-leg{background:#e26b0a!important;color:#fff!important;font-weight:800!important}
+.row-mc td{background:#00b050;color:#fff;font-size:13px;font-weight:800}
+.row-sess td{background:#1f3864;color:#fff;font-weight:700}
+.row-dates td{background:#dce6f1;color:#1f3864;font-weight:700;font-size:10px}
+.tlbl{background:#1f3864!important;color:#fff!important;font-weight:700!important;text-align:left!important;padding-left:8px!important;min-width:118px;font-size:10px!important}
+.off{background:#ffff00;color:#333;font-weight:600}
+.w{background:#00b050;color:#fff;font-weight:700}
+.r{background:#ff0000;color:#fff;font-weight:700}
+/* Session passée : grisée */
+.past-col{opacity:.28;filter:grayscale(.9)}
+.past-lbl{background:#bbb!important;color:#fff!important;font-style:italic}
+.past-date{background:#e8e8e8!important;color:#999!important;text-decoration:line-through}
+/* Session du jour : mise en évidence */
+.today-col{box-shadow:inset 0 0 0 3px #ff9900}
+.today-lbl{background:#ff9900!important;color:#fff!important;font-weight:800!important}
+.today-date{background:#ffe4b8!important;color:#b05800!important;font-weight:800!important}
+.today-badge{display:inline-block;background:#ff9900;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;padding:2px 8px;border-radius:4px;margin-left:6px;letter-spacing:.5px}
+
+/* ─── MODE ÉDITION ─── */
+.edit-btn{background:#e26b0a;color:#fff;border:none;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.3px}
+.edit-btn:hover{background:#b85500}
+.edit-btn.active{background:#00833a}
+.edit-btn.active:hover{background:#006630}
+.editor-box{background:#fff9f0;border:2px solid #e26b0a;border-radius:10px;padding:16px;margin-bottom:14px}
+.editor-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#b85500;margin-bottom:12px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.editor-pays{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.editor-pays-tag{background:#fff;border:1.5px solid #1f3864;color:#1f3864;border-radius:16px;padding:4px 10px 4px 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.editor-pays-tag button{background:none;border:none;color:#c0392b;cursor:pointer;font-size:14px;padding:0;font-weight:800;line-height:1}
+.editor-pays-tag button:hover{color:#96281b}
+.editor-pays-add{display:flex;gap:6px;align-items:center}
+.editor-pays-add input{padding:5px 10px;border:1px solid #ccc;border-radius:6px;font-size:12px;font-family:'Barlow',sans-serif}
+.editor-sessions{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #f0d5b5}
+.editor-sess-row{display:grid;grid-template-columns:80px 90px 1fr 1fr 30px;gap:8px;padding:6px 10px;border-bottom:1px solid #f5e8d8;align-items:center}
+.editor-sess-row:last-child{border-bottom:none}
+.editor-sess-row.past{opacity:.5;background:#fafafa}
+.editor-sess-row.today{background:#fff4d8;border-left:4px solid #ff9900}
+.editor-sess-row input,.editor-sess-row select{padding:5px 8px;border:1px solid #ddd;border-radius:5px;font-size:11px;font-family:'Barlow',sans-serif;width:100%}
+.editor-sess-row input:focus,.editor-sess-row select:focus{border-color:#1f3864;outline:none}
+.editor-sess-row .lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#666}
+.editor-sess-row .del-sess{background:none;border:none;color:#c0392b;cursor:pointer;font-size:14px;font-weight:800}
+.editor-sess-hd{display:grid;grid-template-columns:80px 90px 1fr 1fr 30px;gap:8px;padding:7px 10px;background:#e26b0a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.editor-actions{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.editor-actions-left{display:flex;gap:8px;flex-wrap:wrap}
+.editor-save{background:#00833a;color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.5px}
+.editor-save:hover{background:#006630}
+.editor-reset{background:#fff;color:#c0392b;border:1.5px solid #c0392b;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700}
+.editor-reset:hover{background:#c0392b;color:#fff}
+.editor-add-sess{background:#1f3864;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700}
+.editor-add-sess:hover{background:#2a4a85}
+.edit-hint{font-size:11px;color:#888;margin-top:8px;font-style:italic}
+
+/* ─── TABLEAU RÉCAP PLANNING vs CR ─── */
+.recap-box{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.09);margin-bottom:18px;overflow:hidden}
+.recap-hd{background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.recap-hd h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.recap-stats{display:flex;gap:10px;flex-wrap:wrap}
+.recap-stat{background:rgba(255,255,255,.12);padding:4px 10px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700}
+.recap-stat .v{color:#ffff00;font-size:14px;margin-right:4px}
+.recap-wrap{overflow-x:auto;max-height:480px;overflow-y:auto}
+table.recap{border-collapse:collapse;width:100%;min-width:900px;background:#fff}
+table.recap thead{position:sticky;top:0;z-index:5}
+table.recap th{background:#1f3864;color:#fff;padding:8px 10px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;text-align:left;border-bottom:2px solid #ffff00;white-space:nowrap}
+table.recap td{padding:7px 10px;border-bottom:1px solid #eef1f6;font-size:12px;vertical-align:middle}
+table.recap tr:hover td{background:#fafbff}
+table.recap tr.row-past td{opacity:.5;background:#fafafa}
+table.recap tr.row-today td{background:#fff8e6;border-left:4px solid #ff9900}
+table.recap tr.row-today:first-child td{border-top:2px solid #ff9900}
+.recap-sess{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:#1f3864;font-size:13px}
+.recap-date{color:#666;font-size:11px}
+.recap-pays{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;font-family:'Barlow Condensed',sans-serif;letter-spacing:.3px}
+.recap-pays.w-tag{background:#e6f9f0;color:#00833a;border:1px solid #b3ebd0}
+.recap-pays.r-tag{background:#fdecea;color:#b71c1c;border:1px solid #f5b8b4}
+.recap-pays.off-tag{background:#fff9e6;color:#b07b00;border:1px solid #ffe082}
+.recap-status{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
+.recap-ok{background:#e6f9f0;color:#00833a;border:1px solid #b3ebd0}
+.recap-missing{background:#fdecea;color:#b71c1c;border:1px solid #f5b8b4}
+.recap-waiting{background:#fff9e6;color:#b07b00;border:1px solid #ffe082}
+.recap-past-missing{background:#f0f0f0;color:#888;border:1px solid #ddd}
+.recap-file-link{color:#1a56cc;font-size:11px;cursor:pointer;text-decoration:underline;font-weight:600}
+.recap-file-link:hover{color:#0d3a99}
+.recap-meta{font-size:10px;color:#888;margin-top:2px}
+.recap-tri-switcher{display:flex;gap:4px}
+.recap-tri-btn{background:rgba(255,255,255,.12);color:#fff;border:none;padding:5px 12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px}
+.recap-tri-btn:hover{background:rgba(255,255,255,.22)}
+.recap-tri-btn.active{background:#ffff00;color:#1f3864}
+
+/* ─── POPUP ─── */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:900;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.pop{background:#fff;border-radius:12px;width:96%;max-width:820px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.pop-hd{background:#1f3864;color:#fff;padding:15px 20px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:center}
+.pop-hd h2{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:1px}
+.pop-hd .sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px}
+.pop-close{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:0 4px}
+.pop-close:hover{color:#ffff00}
+.pop-body{padding:16px 20px}
+.pop-ft{padding:10px 20px 16px;text-align:right;border-top:1px solid #eee}
+
+/* ─── ARCHIVAGE ─── */
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#1f3864;margin-bottom:14px;letter-spacing:.8px;text-transform:uppercase}
+.upload-box{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 2px 10px rgba(0,0,0,.09);margin-bottom:18px}
+.upload-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.upload-row select,.upload-row input[type=text]{padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-family:'Barlow',sans-serif;font-size:13px;color:#333}
+.upload-row select{min-width:135px}
+.dz{border:2px dashed #b0b8c8;border-radius:10px;padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:#f9fbfd}
+.dz:hover,.dz.drag-over{border-color:#1f3864;background:#edf2fb}
+.dz-ico{font-size:30px;margin-bottom:6px}
+.dz p{font-size:13px;color:#666}
+.hint{font-size:11px;color:#aaa;margin-top:3px}
+.dz input[type=file]{display:none}
+
+/* Extraction progress */
+.extract-bar{margin-top:10px;display:none}
+.extract-bar .bar-wrap{height:6px;background:#eee;border-radius:4px;overflow:hidden;margin-top:4px}
+.extract-bar .bar-fill{height:100%;background:#1f3864;border-radius:4px;transition:width .4s}
+.extract-label{font-size:12px;color:#1f3864;font-weight:600}
+
+.btn{background:#1f3864;color:#fff;border:none;padding:8px 20px;border-radius:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;transition:all .2s}
+.btn:hover{background:#e26b0a}
+.btn.sm{padding:4px 12px;font-size:12px}
+.btn.green{background:#00833a}.btn.green:hover{background:#006630}
+.btn.danger{background:#c0392b}.btn.danger:hover{background:#96281b}
+.ok-msg{font-size:13px;color:#00b050;font-weight:600;margin-top:8px;display:none}
+
+/* Archives display */
+.arc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.arc-card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.09);overflow:hidden;border:1px solid #e0e0e0}
+.arc-hd{background:#1f3864;color:#fff;padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.arc-hd .bt{background:#ffff00;color:#1f3864;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:800}
+.arc-body{padding:10px 14px;max-height:340px;overflow-y:auto}
+.arc-entry{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:12px}
+.arc-entry:last-child{border-bottom:none}
+.arc-fi{font-size:18px;flex-shrink:0}
+.arc-fn{font-weight:700;color:#1f3864;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arc-fm{font-size:10px;color:#888;margin-top:1px}
+.arc-empty{color:#bbb;font-size:12px;font-style:italic;padding:10px 0;text-align:center}
+.arc-actions{display:flex;gap:4px;flex-shrink:0}
+.arc-btn{background:none;border:1px solid #1f3864;color:#1f3864;border-radius:4px;padding:3px 7px;font-size:10px;cursor:pointer;font-weight:700}
+.arc-btn:hover{background:#1f3864;color:#fff}
+.arc-btn.del{border-color:#c0392b;color:#c0392b}
+.arc-btn.del:hover{background:#c0392b;color:#fff}
+
+/* Content preview popup */
+.cr-preview{background:#f5f8ff;border-left:4px solid #1f3864;border-radius:0 8px 8px 0;padding:14px 16px;font-size:13px;color:#333;line-height:1.75;white-space:pre-wrap;max-height:60vh;overflow-y:auto}
+.cr-section-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#1f3864;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #1f3864;padding-bottom:3px}
+.cr-section-title:first-child{margin-top:0}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:#fff;padding:12px 14px;border-radius:10px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.filter-bar label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#1f3864;text-transform:uppercase;letter-spacing:.3px}
+.filter-bar select,.filter-bar input{padding:6px 10px;border:1px solid #ccc;border-radius:6px;font-family:'Barlow',sans-serif;font-size:12px}
+.filter-bar .stat-count{margin-left:auto;font-size:12px;color:#666;font-weight:600}
+
+/* ─── LOGIN ── */
+.login-screen{position:fixed;inset:0;background:#1a2f55;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:rgba(255,255,255,.75);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;text-align:center}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;text-align:center}
+.login-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:32px;text-align:center;letter-spacing:.5px}
+.login-box{background:#fff;border-radius:16px;padding:32px 36px;width:100%;max-width:380px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.login-box h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:#1f3864;margin-bottom:20px;text-align:center;letter-spacing:.5px;text-transform:uppercase}
+.login-field{margin-bottom:14px}
+.login-field label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.login-field input{width:100%;padding:10px 14px;border:1.5px solid #d0d8e8;border-radius:8px;font-family:'Barlow',sans-serif;font-size:14px;color:#333;outline:none;transition:border .2s}
+.login-field input:focus{border-color:#1f3864}
+.login-err{color:#c0392b;font-size:12px;font-weight:600;min-height:18px;margin-bottom:10px;text-align:center}
+.login-btn{width:100%;background:#1f3864;color:#fff;border:none;padding:12px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:background .2s}
+.login-btn:hover{background:#e26b0a}
+.login-hint{font-size:11px;color:#aaa;text-align:center;margin-top:12px}
+.login-year{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:rgba(255,255,255,.25);margin-top:24px;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     ÉCRAN DE CONNEXION
+══════════════════════════════════════ -->
+<div class="login-screen" id="login-screen">
+  <div class="login-logo">Direction Expérience Client &amp; Projets</div>
+  <div class="login-title">Writer &amp; Reader</div>
+  <div class="login-sub">Plateforme de gestion des comptes rendus 2026</div>
+  <div class="login-box">
+    <h3>🔐 Connexion</h3>
+    <div class="login-field">
+      <label>Nom complet</label>
+      <input type="text" id="login-name" placeholder="Votre prénom et nom..." autocomplete="name" onkeydown="if(event.key==='Enter')document.getElementById('login-pwd').focus()">
+    </div>
+    <div class="login-field">
+      <label>Mot de passe</label>
+      <input type="password" id="login-pwd" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="login-err"></div>
+    <button class="login-btn" onclick="doLogin()">Accéder à la plateforme →</button>
+    <div class="login-hint">Contactez votre administrateur pour vos accès</div>
+  </div>
+  <div class="login-year">© 2026 — DECP CR</div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrapper">
+  <div class="nav-pill">
+    <div class="nav-tab active" onclick="showSec('planning')"><span class="tab-ico">📅</span> Planning</div>
+    <div class="nav-tab" onclick="showSec('archivage')"><span class="tab-ico">📁</span> Archivage CR</div>
+  </div>
+  <div class="user-pill">
+    <span class="user-pill-label" id="user-pill-label">👤 Utilisateur</span>
+  </div>
+  <button class="logout-btn" onclick="doLogout()" title="Se déconnecter">🚪 Déconnexion</button>
+</div>
+
+<!-- ═══ PLANNING ═══ -->
+<div class="sec active" id="sec-planning">
+  <div class="page-title">Direction Expérience Client &amp; Projets — Meeting Minutes Writer &amp; Reader 2026</div>
+
+  <!-- Légende -->
+  <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:24px">
+    <span style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700"><span style="background:#00b050;color:#fff;padding:3px 12px;border-radius:5px">W</span> Rédacteur / Rédactrice</span>
+    <span style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700"><span style="background:#ff0000;color:#fff;padding:3px 12px;border-radius:5px">R</span> Lecteur / Lectrice</span>
+    <span style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700"><span style="background:#ffff00;color:#555;padding:3px 12px;border-radius:5px;border:1px solid #ddd">OFF</span> Repos</span>
+    <span style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700"><span style="background:#ff9900;color:#fff;padding:3px 12px;border-radius:5px">🔶</span> Aujourd'hui (17/04)</span>
+    <span style="display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;opacity:.6"><span style="background:#bbb;color:#fff;padding:3px 12px;border-radius:5px">⏮</span> Session passée</span>
+  </div>
+
+  <!-- Maître de Cérémonie badge -->
+  <div style="text-align:center;margin-bottom:30px">
+    <div style="display:inline-block;background:#00b050;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;padding:10px 28px;border-radius:8px;letter-spacing:1px">
+      🎙️ Master Of Ceremony — Innocent d'ALMEIDA
+    </div>
+  </div>
+
+  <!-- Choix trimestre -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1200px;margin:0 auto">
+
+    <!-- T1 (passé) -->
+    <div onclick="openTriPopup('T1')" style="cursor:pointer;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.12);overflow:hidden;border:2px solid transparent;transition:all .25s;opacity:.85" onmouseover="this.style.borderColor='#8b2635';this.style.transform='translateY(-3px)';this.style.opacity='1'" onmouseout="this.style.borderColor='transparent';this.style.transform='translateY(0)';this.style.opacity='.85'">
+      <div style="background:#8b2635;padding:18px 22px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#ffff00;letter-spacing:2px;margin-bottom:4px">TRIMESTRE 1 · HISTORIQUE</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff">Janv. — Mars</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">S1 → S13 · 13 sessions</div>
+      </div>
+      <div style="padding:16px 22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="background:#fce4e7;color:#8b2635;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">📅 02/01 → 27/03</span>
+          <span style="background:#ddd;color:#666;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:3px 10px;border-radius:5px">⏮ TRIMESTRE PASSÉ</span>
+          <span id="t1-arc-badge" style="background:#f0f0f0;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">0 CR archivés</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">CÔTE-D'IVOIRE · CONGO</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">BÉNIN · CAMEROUN</div>
+        <div style="margin-top:14px;text-align:right">
+          <span style="background:#8b2635;color:#ffff00;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;letter-spacing:.5px">ARCHIVER LES CR PASSÉS →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- T2 -->
+    <div onclick="openTriPopup('T2')" style="cursor:pointer;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.12);overflow:hidden;border:2px solid transparent;transition:all .25s" onmouseover="this.style.borderColor='#1f3864';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='transparent';this.style.transform='translateY(0)'">
+      <div style="background:#1f3864;padding:18px 22px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#ffff00;letter-spacing:2px;margin-bottom:4px">TRIMESTRE 2</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff">Avril — Juin</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">S14 → S25 · 12 sessions</div>
+      </div>
+      <div style="padding:16px 22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="background:#edf2ff;color:#1f3864;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">📅 03/04 → 19/06</span>
+          <span style="background:#ff9900;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;padding:3px 10px;border-radius:5px">🔶 AUJOURD'HUI · S16</span>
+          <span id="t2-arc-badge" style="background:#f0f0f0;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">0 CR archivés</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">CÔTE-D'IVOIRE · CONGO</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">BÉNIN · CAMEROUN</div>
+        <div style="margin-top:14px;text-align:right">
+          <span style="background:#1f3864;color:#ffff00;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;letter-spacing:.5px">VOIR LE PLANNING →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- T3 -->
+    <div onclick="openTriPopup('T3')" style="cursor:pointer;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.12);overflow:hidden;border:2px solid transparent;transition:all .25s" onmouseover="this.style.borderColor='#2d6a4f';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='transparent';this.style.transform='translateY(0)'">
+      <div style="background:#2d6a4f;padding:18px 22px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#ffff00;letter-spacing:2px;margin-bottom:4px">TRIMESTRE 3</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff">Juillet — Sept.</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">S26 → S37 · 12 sessions</div>
+      </div>
+      <div style="padding:16px 22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="background:#edfaf3;color:#2d6a4f;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">📅 03/07 → 18/09</span>
+          <span id="t3-arc-badge" style="background:#f0f0f0;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">0 CR archivés</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">CÔTE-D'IVOIRE · CONGO</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">BÉNIN · CAMEROUN</div>
+        <div style="margin-top:14px;text-align:right">
+          <span style="background:#2d6a4f;color:#ffff00;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;letter-spacing:.5px">VOIR LE PLANNING →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- T4 -->
+    <div onclick="openTriPopup('T4')" style="cursor:pointer;background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.12);overflow:hidden;border:2px solid transparent;transition:all .25s" onmouseover="this.style.borderColor='#6b3d14';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='transparent';this.style.transform='translateY(0)'">
+      <div style="background:#6b3d14;padding:18px 22px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#ffff00;letter-spacing:2px;margin-bottom:4px">TRIMESTRE 4</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:#fff">Oct. — Déc.</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">S38 → S49 · 12 sessions</div>
+      </div>
+      <div style="padding:16px 22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="background:#fff5ed;color:#6b3d14;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">📅 02/10 → 18/12</span>
+          <span id="t4-arc-badge" style="background:#f0f0f0;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:5px">0 CR archivés</span>
+        </div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">CÔTE-D'IVOIRE · CONGO</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#555;font-weight:600">BÉNIN · CAMEROUN</div>
+        <div style="margin-top:14px;text-align:right">
+          <span style="background:#6b3d14;color:#ffff00;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;letter-spacing:.5px">VOIR LE PLANNING →</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ POPUP PLANNING TRIMESTRE ═══ -->
+<div class="ov" id="tri-ov" onclick="if(event.target===this)closeTriPopup()">
+  <div class="pop" style="max-width:1100px">
+    <div class="pop-hd" id="tri-pop-hd">
+      <div><h2 id="tri-pop-title"></h2><div class="sub" id="tri-pop-sub"></div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="edit-btn admin-only" id="edit-toggle-btn" onclick="toggleEditor()">✏️ Éditer le planning</button>
+        <button class="pop-close" onclick="closeTriPopup()">✕</button>
+      </div>
+    </div>
+    <div class="pop-body" style="padding:12px 16px;overflow-x:auto">
+      <!-- Vue normale -->
+      <div id="planning-view">
+        <table class="ptbl" id="tri-pop-table" style="min-width:900px">
+          <tr class="row-leg"><td class="lbl-leg">LÉGENDE</td><td colspan="4" style="background:#e26b0a;color:#fff;font-weight:700">W = RÉDACTEUR/RÉDACTRICE</td><td colspan="4" style="background:#e26b0a;color:#fff;font-weight:700">OFF = REPOS</td><td colspan="4" style="background:#e26b0a;color:#fff;font-weight:700">R = LECTEUR/LECTRICE</td></tr>
+          <tr class="row-mc"><td colspan="13">Master Of Ceremony — Innocent d'ALMEIDA</td></tr>
+          <tbody id="tri-pop-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Éditeur -->
+      <div id="planning-editor" style="display:none">
+        <div class="editor-box">
+          <div class="editor-title">🌍 Pays de la rotation</div>
+          <div class="editor-pays" id="editor-pays-list"></div>
+          <div class="editor-pays-add">
+            <input type="text" id="editor-new-pays" placeholder="Nom du pays à ajouter..." onkeydown="if(event.key==='Enter')addPays()">
+            <button class="btn sm" onclick="addPays()">+ Ajouter un pays</button>
+          </div>
+          <div class="edit-hint">💡 Les pays sont communs aux 3 trimestres. Supprimer un pays le retire de toutes les rotations.</div>
+        </div>
+
+        <div class="editor-box">
+          <div class="editor-title">📅 Sessions du trimestre — <span id="editor-tri-label"></span></div>
+          <div class="editor-sessions">
+            <div class="editor-sess-hd">
+              <div>Session</div><div>Date</div><div>Writer (W)</div><div>Reader (R)</div><div></div>
+            </div>
+            <div id="editor-sessions-list"></div>
+          </div>
+          <div style="margin-top:10px">
+            <button class="editor-add-sess" onclick="addSession()">+ Ajouter une session</button>
+          </div>
+          <div class="edit-hint">💡 Pour automatiser le Reader, laissez "auto" (= Writer de la session précédente). Sinon, sélectionnez manuellement.</div>
+        </div>
+
+        <div class="editor-actions">
+          <div class="editor-actions-left">
+            <button class="editor-save" onclick="savePlanning()">💾 Enregistrer les modifications</button>
+            <button class="editor-reset" onclick="resetPlanning()">↺ Réinitialiser ce trimestre</button>
+          </div>
+          <button class="btn sm" onclick="toggleEditor()">✕ Annuler l'édition</button>
+        </div>
+      </div>
+    </div>
+    <div class="pop-ft" style="display:flex;justify-content:space-between;align-items:center">
+      <span id="tri-pop-arch" style="font-size:12px;color:#888"></span>
+      <button class="btn sm" onclick="closeTriPopup()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ARCHIVAGE ═══ -->
+<div class="sec" id="sec-archivage">
+  <div class="sec-title">📁 Archivage Comptes Rendus</div>
+
+  <!-- Import box (ADMIN UNIQUEMENT) -->
+  <div class="upload-box admin-only">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:#1f3864;margin-bottom:10px">📤 Importer un Compte Rendu (.docx) — Extraction automatique du contenu</div>
+    <div class="upload-row">
+      <select id="sel-tri" onchange="tryAutoImport()">
+        <option value="">-- Trimestre --</option>
+        <option>T1 2026</option><option>T2 2026</option><option>T3 2026</option><option>T4 2026</option>
+      </select>
+      <select id="sel-sess" onchange="tryAutoImport()">
+        <option value="">-- Session --</option>
+        <optgroup label="T1 (historique)"><option style="color:#999;font-style:italic">⏮ S1 - 02/01 (passée)</option><option style="color:#999;font-style:italic">⏮ S2 - 09/01 (passée)</option><option style="color:#999;font-style:italic">⏮ S3 - 16/01 (passée)</option><option style="color:#999;font-style:italic">⏮ S4 - 23/01 (passée)</option><option style="color:#999;font-style:italic">⏮ S5 - 30/01 (passée)</option><option style="color:#999;font-style:italic">⏮ S6 - 06/02 (passée)</option><option style="color:#999;font-style:italic">⏮ S7 - 13/02 (passée)</option><option style="color:#999;font-style:italic">⏮ S8 - 20/02 (passée)</option><option style="color:#999;font-style:italic">⏮ S9 - 27/02 (passée)</option><option style="color:#999;font-style:italic">⏮ S10 - 06/03 (passée)</option><option style="color:#999;font-style:italic">⏮ S11 - 13/03 (passée)</option><option style="color:#999;font-style:italic">⏮ S12 - 20/03 (passée)</option><option style="color:#999;font-style:italic">⏮ S13 - 27/03 (passée)</option></optgroup>
+        <optgroup label="T2"><option style="color:#999;font-style:italic">⏮ S14 - 03/04 (passée)</option><option style="color:#999;font-style:italic">⏮ S15 - 10/04 (passée)</option><option style="color:#b05800;font-weight:700">🔶 S16 - 17/04 (AUJOURD'HUI)</option><option>S17 - 24/04</option><option>S18 - 01/05</option><option>S19 - 08/05</option><option>S20 - 15/05</option><option>S21 - 22/05</option><option>S22 - 29/05</option><option>S23 - 05/06</option><option>S24 - 12/06</option><option>S25 - 19/06</option></optgroup>
+        <optgroup label="T3"><option>S26 - 03/07</option><option>S27 - 10/07</option><option>S28 - 17/07</option><option>S29 - 24/07</option><option>S30 - 31/07</option><option>S31 - 07/08</option><option>S32 - 14/08</option><option>S33 - 21/08</option><option>S34 - 28/08</option><option>S35 - 04/09</option><option>S36 - 11/09</option><option>S37 - 18/09</option></optgroup>
+        <optgroup label="T4"><option>S38 - 02/10</option><option>S39 - 09/10</option><option>S40 - 16/10</option><option>S41 - 23/10</option><option>S42 - 30/10</option><option>S43 - 06/11</option><option>S44 - 13/11</option><option>S45 - 20/11</option><option>S46 - 27/11</option><option>S47 - 04/12</option><option>S48 - 11/12</option><option>S49 - 18/12</option></optgroup>
+      </select>
+      <select id="sel-pays" onchange="tryAutoImport()">
+        <option value="">-- Pays --</option>
+        <option>CÔTE-D'IVOIRE</option><option>CONGO</option><option>BÉNIN</option><option>CAMEROUN</option>
+      </select>
+    </div>
+    <div class="dz" id="dz" onclick="document.getElementById('fi').click()"
+         ondragover="event.preventDefault();this.classList.add('drag-over')"
+         ondragleave="this.classList.remove('drag-over')"
+         ondrop="dropFile(event)">
+      <input type="file" id="fi" accept=".docx,.doc" multiple onchange="pickFile(event)">
+      <div class="dz-ico">📄</div>
+      <p id="dz-label"><strong>Cliquez ou glissez vos fichiers Word ici</strong></p>
+      <div class="hint">✨ Import automatique · Import multiple autorisé (.docx · .doc)</div>
+    </div>
+    <div class="extract-bar" id="extract-bar">
+      <div class="extract-label" id="extract-label">🔍 Extraction en cours…</div>
+      <div class="bar-wrap"><div class="bar-fill" id="bar-fill" style="width:0%"></div></div>
+    </div>
+    <div class="ok-msg" id="ok-msg">✅ Compte rendu importé et sauvegardé !</div>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button class="btn" style="background:#e26b0a" onclick="exportAllArchives()">💾 Exporter la sauvegarde (ZIP)</button>
+      <button class="btn" style="background:#00833a" onclick="publishViewerVersion()" title="Génère un fichier HTML autonome avec toutes les données figées dedans, à uploader sur GitHub Pages pour le partage en consultation">📤 Publier la version consultation</button>
+    </div>
+    <div style="font-size:11px;color:#888;margin-top:8px;font-style:italic">
+      ✨ Import automatique dès que vous déposez un fichier · 💾 Sauvegarde automatique dans l'outil · 📤 Exportez le ZIP pour conserver une copie externe<br>
+      🌐 <strong>Publier la version consultation</strong> : génère un fichier HTML figé prêt à uploader sur GitHub Pages pour partage à l'équipe (lecture seule)
+    </div>
+  </div>
+
+  <!-- Bouton récapitulatif -->
+  <div style="margin-bottom:14px;display:flex;justify-content:flex-end">
+    <button class="btn" style="background:#1f3864;display:inline-flex;align-items:center;gap:8px" onclick="openRecapPopup()">
+      📊 Voir le récapitulatif Planning ↔ CR
+    </button>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <label>Filtrer :</label>
+    <select id="flt-tri" onchange="renderArch()">
+      <option value="">Tous les trimestres</option>
+      <option value="T1">T1 2026</option><option value="T2">T2 2026</option><option value="T3">T3 2026</option><option value="T4">T4 2026</option>
+    </select>
+    <select id="flt-pays" onchange="renderArch()">
+      <option value="">Tous les pays</option>
+      <option>CÔTE-D'IVOIRE</option><option>CONGO</option><option>BÉNIN</option><option>CAMEROUN</option>
+    </select>
+    <input type="text" id="flt-search" placeholder="🔎 Rechercher dans le nom du fichier..." oninput="renderArch()" style="flex:1;min-width:180px">
+    <span class="stat-count" id="stat-count">0 CR archivés</span>
+  </div>
+
+  <!-- Archives display -->
+  <div class="arc-grid" id="arc-grid"></div>
+</div>
+
+<!-- ═══ POPUP RÉCAPITULATIF ═══ -->
+<div class="ov" id="recap-ov" onclick="if(event.target===this)closeRecapPopup()">
+  <div class="pop" style="max-width:1100px">
+    <div class="pop-hd" style="background:#1f3864">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div>
+          <h2>📊 Récapitulatif Planning ↔ CR archivés</h2>
+          <div class="sub">Vue croisée des sessions planifiées et des comptes rendus importés</div>
+        </div>
+        <div class="recap-tri-switcher">
+          <button class="recap-tri-btn active" data-tri="ALL" onclick="switchRecapTri('ALL')">TOUS</button>
+          <button class="recap-tri-btn" data-tri="T1" onclick="switchRecapTri('T1')">T1</button>
+          <button class="recap-tri-btn" data-tri="T2" onclick="switchRecapTri('T2')">T2</button>
+          <button class="recap-tri-btn" data-tri="T3" onclick="switchRecapTri('T3')">T3</button>
+          <button class="recap-tri-btn" data-tri="T4" onclick="switchRecapTri('T4')">T4</button>
+        </div>
+      </div>
+      <button class="pop-close" onclick="closeRecapPopup()">✕</button>
+    </div>
+    <div class="pop-body" style="padding:14px 18px">
+      <div class="recap-stats" id="recap-stats" style="margin-bottom:12px"></div>
+      <div class="recap-wrap" style="max-height:65vh">
+        <table class="recap">
+          <thead>
+            <tr>
+              <th style="width:70px">Session</th>
+              <th style="width:80px">Date</th>
+              <th style="width:130px">Writer prévu</th>
+              <th style="width:130px">Reader prévu</th>
+              <th style="width:140px">Statut CR</th>
+              <th>Fichier importé</th>
+            </tr>
+          </thead>
+          <tbody id="recap-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="pop-ft">
+      <button class="btn sm" onclick="closeRecapPopup()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ POPUP CONTENU CR ═══ -->
+<div class="ov" id="cr-ov" onclick="if(event.target===this)closeCRPopup()">
+  <div class="pop">
+    <div class="pop-hd">
+      <div><h2 id="cr-pop-title">Compte Rendu</h2><div class="sub" id="cr-pop-sub"></div></div>
+      <button class="pop-close" onclick="closeCRPopup()">✕</button>
+    </div>
+    <div class="pop-body">
+      <div id="cr-preview-content" class="cr-preview"></div>
+    </div>
+    <div class="pop-ft" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <button class="btn sm" style="background:#e26b0a" id="cr-pop-download" onclick="downloadCR(window._currentViewedCR)">💾 Télécharger le Word original</button>
+      <button class="btn sm" onclick="closeCRPopup()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+// ── STATE ──
+// 🔐 DEUX MOTS DE PASSE :
+//   - ADMIN_PASSWORD : accès complet (importer, supprimer, modifier planning, publier)
+//   - VIEWER_PASSWORD : consultation uniquement (voir + télécharger les CR)
+// Tu peux changer ces mots de passe ci-dessous.
+const ADMIN_PASSWORD  = '2026';      // ← TON mot de passe admin (à toi)
+const VIEWER_PASSWORD = 'lecture';   // ← Mot de passe que tu donnes aux collègues
+let currentUser = null;
+let isAdmin = false;
+// Mode publication (lecture seule, données figées dans le fichier) — défini plus bas si présent
+let PUBLISHED_MODE = false;
+let pendingFiles = [];
+let archives = {T1:[],T2:[],T3:[],T4:[]};
+let archiveId = 0;
+
+// ── PERSISTENCE (IndexedDB — permet de stocker les fichiers Word binaires) ──
+// IndexedDB n'a quasiment pas de limite de taille (contrairement à localStorage ~5MB).
+// Store 'meta' : métadonnées des CR (sans le binaire)
+// Store 'files' : fichiers Word binaires (clé = id du CR)
+const DB_NAME='cr_archives_db';
+const DB_VERSION=1;
+let _db=null;
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    if(_db){resolve(_db);return;}
+    if(typeof indexedDB==='undefined'){resolve(null);return;}
+    const req=indexedDB.open(DB_NAME,DB_VERSION);
+    req.onupgradeneeded=e=>{
+      const db=e.target.result;
+      if(!db.objectStoreNames.contains('meta'))db.createObjectStore('meta',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('files'))db.createObjectStore('files',{keyPath:'id'});
+      if(!db.objectStoreNames.contains('config'))db.createObjectStore('config',{keyPath:'key'});
+    };
+    req.onsuccess=()=>{_db=req.result;resolve(_db);};
+    req.onerror=()=>reject(req.error);
+  });
+}
+
+async function dbSaveMeta(metaObj){
+  const db=await openDB();if(!db)return;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('meta','readwrite');
+    tx.objectStore('meta').put(metaObj);
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+
+async function dbSaveFile(id,arrayBuffer,name){
+  const db=await openDB();if(!db)return;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('files','readwrite');
+    tx.objectStore('files').put({id,data:arrayBuffer,name});
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+
+async function dbGetFile(id){
+  const db=await openDB();if(!db)return null;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('files','readonly');
+    const req=tx.objectStore('files').get(id);
+    req.onsuccess=()=>res(req.result);
+    req.onerror=()=>rej(req.error);
+  });
+}
+
+async function dbDeleteRecord(id){
+  const db=await openDB();if(!db)return;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction(['meta','files'],'readwrite');
+    tx.objectStore('meta').delete(id);
+    tx.objectStore('files').delete(id);
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+
+async function dbClearAll(){
+  const db=await openDB();if(!db)return;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction(['meta','files','config'],'readwrite');
+    tx.objectStore('meta').clear();
+    tx.objectStore('files').clear();
+    tx.objectStore('config').clear();
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+
+async function dbGetAllMeta(){
+  const db=await openDB();if(!db)return [];
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('meta','readonly');
+    const req=tx.objectStore('meta').getAll();
+    req.onsuccess=()=>res(req.result||[]);
+    req.onerror=()=>rej(req.error);
+  });
+}
+
+async function dbSaveConfig(key,value){
+  const db=await openDB();if(!db)return;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('config','readwrite');
+    tx.objectStore('config').put({key,value});
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+
+async function dbGetConfig(key){
+  const db=await openDB();if(!db)return null;
+  return new Promise((res,rej)=>{
+    const tx=db.transaction('config','readonly');
+    const req=tx.objectStore('config').get(key);
+    req.onsuccess=()=>res(req.result?req.result.value:null);
+    req.onerror=()=>rej(req.error);
+  });
+}
+
+// Sauvegarde légère (meta) — appelée après chaque modif
+async function saveState(){
+  try{
+    // Sauvegarder l'id courant
+    await dbSaveConfig('archiveId',archiveId);
+    // Le meta de chaque archive est sauvegardé individuellement lors de l'import
+  }catch(e){console.warn('saveState err',e);}
+  // Fallback localStorage pour compat (sans les binaires)
+  try{
+    const data=JSON.stringify({archives:sanitizeArchivesForStorage(archives),archiveId});
+    if(typeof localStorage!=='undefined')localStorage.setItem('cr_archives_2026',data);
+  }catch(e){/* trop gros probablement, on laisse IndexedDB gérer */}
+}
+
+function sanitizeArchivesForStorage(a){
+  // Retire les arrayBuffers éventuels avant sérialisation localStorage
+  const out={T1:[],T2:[],T3:[],T4:[]};
+  for(const t of ['T1','T2','T3','T4']){
+    out[t]=(a[t]||[]).map(x=>{const c={...x};delete c.fileBuffer;return c;});
+  }
+  return out;
+}
+
+async function loadState(){
+  // ── MODE PUBLIÉ : charger les données depuis le bloc embarqué ──
+  if(window.PUBLISHED_MODE && window.EMBEDDED_ARCHIVES){
+    PUBLISHED_MODE=true;
+    archives={
+      T1:window.EMBEDDED_ARCHIVES.T1||[],
+      T2:window.EMBEDDED_ARCHIVES.T2||[],
+      T3:window.EMBEDDED_ARCHIVES.T3||[],
+      T4:window.EMBEDDED_ARCHIVES.T4||[]
+    };
+    const all=[...archives.T1,...archives.T2,...archives.T3,...archives.T4];
+    archiveId=all.length>0?Math.max(...all.map(a=>a.id||0)):0;
+    return;
+  }
+  // Essayer d'abord IndexedDB
+  try{
+    const allMeta=await dbGetAllMeta();
+    const savedId=await dbGetConfig('archiveId');
+    if(allMeta.length>0){
+      archives={T1:[],T2:[],T3:[],T4:[]};
+      // Migration : certains CR anciens ont pu être stockés avec un sess corrompu (emoji, etc.)
+      // On tente de réparer en extrayant le pattern S\d+
+      let migrated=0;
+      for(const m of allMeta){
+        if(m.sess && !/^S\d+$/.test(m.sess)){
+          const match=(m.sess||'').match(/S\d+/);
+          if(match){
+            m.sess=match[0];
+            migrated++;
+            try{await dbSaveMeta(m);}catch(e){}
+          }
+        }
+        if(archives[m.tri])archives[m.tri].push(m);
+      }
+      if(migrated>0)console.log('Migration sess : '+migrated+' CR corrigés');
+      if(savedId)archiveId=savedId;
+      return;
+    }
+  }catch(e){console.warn('loadState IDB err',e);}
+  // Fallback localStorage (anciennes versions)
+  try{
+    if(typeof localStorage==='undefined')return;
+    const data=localStorage.getItem('cr_archives_2026');
+    if(data){
+      const o=JSON.parse(data);
+      if(o.archives){archives=o.archives;archives.T1=archives.T1||[];archives.T2=archives.T2||[];archives.T3=archives.T3||[];archives.T4=archives.T4||[];}
+      if(o.archiveId)archiveId=o.archiveId;
+    }
+  }catch(e){/* silencieux */}
+}
+
+// Sécurité : garantit que les 4 buckets existent toujours (en cas de migration depuis ancienne version)
+function ensureArchiveBuckets(){
+  archives=archives||{};
+  ['T1','T2','T3','T4'].forEach(t=>{if(!archives[t])archives[t]=[];});
+}
+
+// ── LOGIN ──
+function doLogin(){
+  const name = document.getElementById('login-name').value.trim();
+  const pwd  = document.getElementById('login-pwd').value.trim();
+  const err  = document.getElementById('login-err');
+  if(!name){ err.textContent='⚠️ Veuillez saisir votre nom.'; return; }
+  if(!pwd){  err.textContent='⚠️ Veuillez saisir le mot de passe.'; return; }
+
+  // Détection du rôle selon le mot de passe
+  if(pwd === ADMIN_PASSWORD){
+    isAdmin = true;
+  } else if(pwd === VIEWER_PASSWORD){
+    isAdmin = false;
+  } else {
+    err.textContent='❌ Mot de passe incorrect.';
+    document.getElementById('login-pwd').value='';
+    return;
+  }
+
+  currentUser = { name, role: isAdmin ? 'admin' : 'viewer' };
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('user-pill-label').textContent = (isAdmin?'⭐ ':'👤 ') + name + (isAdmin?' (Admin)':' (Lecture)');
+  document.getElementById('login-err').textContent='';
+
+  // Appliquer les permissions à l'écran (masquer/afficher selon le rôle)
+  applyRolePermissions();
+}
+
+function doLogout(){
+  if(!confirm('Se déconnecter de la plateforme ?'))return;
+  currentUser = null;
+  isAdmin = false;
+  // Réafficher l'écran de login et vider les champs
+  document.getElementById('login-name').value='';
+  document.getElementById('login-pwd').value='';
+  document.getElementById('login-err').textContent='';
+  document.getElementById('user-pill-label').textContent='👤 Utilisateur';
+  document.getElementById('login-screen').style.display='flex';
+  // Remettre le focus sur le champ nom
+  setTimeout(()=>document.getElementById('login-name').focus(),100);
+}
+
+// ── PERMISSIONS SELON LE RÔLE ──
+// Cette fonction masque/affiche les éléments selon que l'utilisateur est admin ou viewer.
+// Elle est appelée après le login.
+function applyRolePermissions(){
+  // Tous les éléments avec la classe "admin-only" ne sont visibles que pour l'admin
+  document.querySelectorAll('.admin-only').forEach(el=>{
+    el.style.display = isAdmin ? '' : 'none';
+  });
+  // Re-rendu de la liste des archives pour cacher les boutons supprimer
+  if(typeof renderArch === 'function') renderArch();
+}
+
+// ── NAV ──
+function showSec(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  ['planning','archivage'].forEach((n,i)=>{
+    if(n===id) document.querySelectorAll('.nav-tab')[i].classList.add('active');
+  });
+}
+
+// ── PLANNING DATA (DEFAULTS) ──
+// Chaque session a son propre W explicite. R='auto' = Writer de la session précédente, ou un code pays.
+const DEFAULT_PAYS = ['CÔTE-D\'IVOIRE','CONGO','BÉNIN','CAMEROUN'];
+
+function buildDefaultTri(sessList,dateList,pays){
+  // Rotation cyclique ancrée sur S16 = pays[0] (CÔTE-D'IVOIRE)
+  // À la session N, Writer = pays[(N - 16) mod len], avec modulo positif
+  // Ex : S16→CI, S17→CONGO, S18→BÉNIN, S19→CAMEROUN, S20→CI, S21→CONGO, etc.
+  // Pour les sessions passées (S14, S15) : on rembobine la rotation
+  const ANCHOR = 16;
+  const len = pays.length;
+  return sessList.map((s,i)=>{
+    const n = parseInt(String(s).replace('S',''))||0;
+    const idx = ((n - ANCHOR) % len + len) % len;
+    return {
+      s,
+      d:dateList[i],
+      w:pays[idx],
+      r:'auto'   // auto = W de la session précédente
+    };
+  });
+}
+
+const DEFAULT_TRI = {
+  T1:{
+    title:'T1 2026 — Planning Complet',sub:'Janvier · Février · Mars 2026',color:'#8b2635',
+    sessions:buildDefaultTri(
+      ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13'],
+      ['02/01','09/01','16/01','23/01','30/01','06/02','13/02','20/02','27/02','06/03','13/03','20/03','27/03'],
+      DEFAULT_PAYS
+    )
+  },
+  T2:{
+    title:'T2 2026 — Planning Complet',sub:'Avril · Mai · Juin 2026',color:'#1f3864',
+    sessions:buildDefaultTri(
+      ['S14','S15','S16','S17','S18','S19','S20','S21','S22','S23','S24','S25'],
+      ['03/04','10/04','17/04','24/04','01/05','08/05','15/05','22/05','29/05','05/06','12/06','19/06'],
+      DEFAULT_PAYS
+    )
+  },
+  T3:{
+    title:'T3 2026 — Planning Complet',sub:'Juillet · Août · Septembre 2026',color:'#2d6a4f',
+    sessions:buildDefaultTri(
+      ['S26','S27','S28','S29','S30','S31','S32','S33','S34','S35','S36','S37'],
+      ['03/07','10/07','17/07','24/07','31/07','07/08','14/08','21/08','28/08','04/09','11/09','18/09'],
+      DEFAULT_PAYS
+    )
+  },
+  T4:{
+    title:'T4 2026 — Planning Complet',sub:'Octobre · Novembre · Décembre 2026',color:'#6b3d14',
+    sessions:buildDefaultTri(
+      ['S38','S39','S40','S41','S42','S43','S44','S45','S46','S47','S48','S49'],
+      ['02/10','09/10','16/10','23/10','30/10','06/11','13/11','20/11','27/11','04/12','11/12','18/12'],
+      DEFAULT_PAYS
+    )
+  }
+};
+
+// Variables live (modifiables + persistées)
+let TRI_DATA = JSON.parse(JSON.stringify(DEFAULT_TRI));
+let ALL_PAYS = [...DEFAULT_PAYS];
+let currentTri = null;         // trimestre actif dans le popup
+let editMode = false;          // mode édition actif ?
+
+// Chargement depuis localStorage s'il existe
+// v2 : rotation ancrée sur S16 = CÔTE-D'IVOIRE (change de clé pour invalider l'ancienne)
+function loadPlanningState(){
+  try{
+    if(typeof localStorage==='undefined')return;
+    const raw=localStorage.getItem('cr_planning_2026_v2');
+    if(raw){
+      const o=JSON.parse(raw);
+      // Fusion : on garde la valeur sauvegardée si elle existe, sinon on utilise la valeur par défaut.
+      // Cela permet d'ajouter de nouveaux trimestres (T1 par ex.) dans une version ultérieure
+      // sans les perdre si l'utilisateur avait déjà un storage v2.
+      if(o.TRI_DATA){
+        ['T1','T2','T3','T4'].forEach(t=>{
+          if(o.TRI_DATA[t])TRI_DATA[t]=o.TRI_DATA[t];
+          // sinon, on garde la valeur par défaut déjà dans TRI_DATA
+        });
+      }
+      if(o.ALL_PAYS && Array.isArray(o.ALL_PAYS) && o.ALL_PAYS.length>0)ALL_PAYS=o.ALL_PAYS;
+    }
+    // Nettoyage de l'ancienne clé v1 si présente
+    try{localStorage.removeItem('cr_planning_2026');}catch(e){}
+  }catch(e){/* silencieux */}
+}
+function savePlanningState(){
+  try{
+    if(typeof localStorage==='undefined')return;
+    localStorage.setItem('cr_planning_2026_v2',JSON.stringify({TRI_DATA,ALL_PAYS}));
+  }catch(e){/* silencieux */}
+}
+
+// Date de référence : aujourd'hui (début du planning actif)
+const TODAY_SESS = 'S16';   // S16 = 17/04/2026 (vendredi)
+const TODAY_DATE_LABEL = '17/04/2026';
+
+// Helpers
+function sessNum(s){return parseInt(String(s).replace('S',''))||0;}
+function isPastSession(sessCode){return sessNum(sessCode) < sessNum(TODAY_SESS);}
+function isTodaySession(sessCode){return sessCode === TODAY_SESS;}
+
+// Calcule le reader effectif d'une session (auto → W précédent)
+function effectiveReader(triData,i){
+  const s=triData.sessions[i];
+  if(s.r==='auto'){
+    return i===0 ? '' : triData.sessions[i-1].w;
+  }
+  return s.r;
+}
+
+function openTriPopup(tri){
+  currentTri=tri;
+  editMode=false;
+  document.getElementById('planning-view').style.display='block';
+  document.getElementById('planning-editor').style.display='none';
+  document.getElementById('edit-toggle-btn').classList.remove('active');
+  document.getElementById('edit-toggle-btn').innerHTML='✏️ Éditer le planning';
+
+  const d=TRI_DATA[tri];
+  const hd=document.getElementById('tri-pop-hd');
+  hd.style.background=d.color;
+  document.getElementById('tri-pop-title').textContent=d.title;
+  document.getElementById('tri-pop-sub').textContent=d.sub;
+  renderPlanningView();
+  document.getElementById('tri-ov').classList.add('open');
+}
+function closeTriPopup(){document.getElementById('tri-ov').classList.remove('open');currentTri=null;editMode=false;}
+
+function renderPlanningView(){
+  if(!currentTri)return;
+  const d=TRI_DATA[currentTri];
+  const allArch=[...archives.T1,...archives.T2,...archives.T3,...archives.T4].map(a=>a.sess);
+  const n=d.sessions.length;
+
+  // Classes passée/aujourd'hui
+  const colCls=(sess)=>{
+    if(isPastSession(sess))return ' past-col';
+    if(isTodaySession(sess))return ' today-col';
+    return '';
+  };
+
+  // Ligne sessions
+  let sessRow=`<tr class="row-sess"><td class="tlbl">TEAM CR</td>${d.sessions.map(r=>{
+    let extra='';
+    if(isPastSession(r.s))extra=' past-lbl';
+    else if(isTodaySession(r.s))extra=' today-lbl';
+    const badge=isTodaySession(r.s)?'<br><span style="font-size:9px">AUJOURD\'HUI</span>':'';
+    return `<td class="${extra.trim()}">${r.s}${badge}</td>`;
+  }).join('')}</tr>`;
+
+  // Ligne dates
+  let dateRow=`<tr class="row-dates"><td class="tlbl"></td>${d.sessions.map(r=>{
+    let extra='';
+    if(isPastSession(r.s))extra=' past-date';
+    else if(isTodaySession(r.s))extra=' today-date';
+    return `<td class="${extra.trim()}">${r.d}</td>`;
+  }).join('')}</tr>`;
+
+  // Lignes pays
+  let countryRows='';
+  ALL_PAYS.forEach((pays)=>{
+    let cells=`<td class="tlbl">${escHtml(pays)}</td>`;
+    for(let si=0;si<n;si++){
+      const row=d.sessions[si];
+      const cls=colCls(row.s);
+      const reader=effectiveReader(d,si);
+      if(row.w===pays){
+        const isA=allArch.includes(row.s);
+        cells+=`<td class="w${cls}">W ${row.s}${isA?' ✅':''}</td>`;
+      } else if(reader===pays){
+        // "R S14" = lit le CR de la session précédente (celle qu'il a écrite)
+        const prevSess=si>0?d.sessions[si-1].s:'';
+        cells+=`<td class="r${cls}">R ${prevSess}</td>`;
+      } else {
+        cells+=`<td class="off${cls}">OFF</td>`;
+      }
+    }
+    countryRows+=`<tr>${cells}</tr>`;
+  });
+  // Mise à jour du colspan de la ligne MC (nombre de sessions + 1 colonne label)
+  const colspan=n+1;
+  document.querySelector('#planning-view .row-mc td').setAttribute('colspan',colspan);
+  document.querySelector('#planning-view .row-leg').innerHTML=`<td class="lbl-leg">LÉGENDE</td><td colspan="${Math.ceil(n/3)}" style="background:#e26b0a;color:#fff;font-weight:700">W = RÉDACTEUR/RÉDACTRICE</td><td colspan="${Math.ceil(n/3)}" style="background:#e26b0a;color:#fff;font-weight:700">OFF = REPOS</td><td colspan="${n-2*Math.ceil(n/3)}" style="background:#e26b0a;color:#fff;font-weight:700">R = LECTEUR/LECTRICE</td>`;
+  document.getElementById('tri-pop-body').innerHTML=sessRow+dateRow+countryRows;
+
+  const archCount=archives[currentTri]?archives[currentTri].length:0;
+  const activeSessions=d.sessions.filter(r=>!isPastSession(r.s)).length;
+  const pastCount=n-activeSessions;
+  let footer=`${archCount} CR archivé(s) · ${activeSessions} session(s) à venir`;
+  if(pastCount>0)footer+=` · ${pastCount} session(s) passée(s) (grisées)`;
+  document.getElementById('tri-pop-arch').textContent=footer;
+}
+
+// ── MODE ÉDITION ──
+function toggleEditor(){
+  if(!currentTri)return;
+  editMode=!editMode;
+  document.getElementById('planning-view').style.display=editMode?'none':'block';
+  document.getElementById('planning-editor').style.display=editMode?'block':'none';
+  const btn=document.getElementById('edit-toggle-btn');
+  if(editMode){
+    btn.classList.add('active');
+    btn.innerHTML='👁 Aperçu du planning';
+    renderEditor();
+  } else {
+    btn.classList.remove('active');
+    btn.innerHTML='✏️ Éditer le planning';
+    renderPlanningView();
+  }
+}
+
+function renderEditor(){
+  if(!currentTri)return;
+  document.getElementById('editor-tri-label').textContent=TRI_DATA[currentTri].title;
+
+  // Pays list
+  const paysList=document.getElementById('editor-pays-list');
+  paysList.innerHTML=ALL_PAYS.map((p,i)=>`
+    <div class="editor-pays-tag">
+      <span>${escHtml(p)}</span>
+      <button onclick="removePays(${i})" title="Retirer ce pays">✕</button>
+    </div>`).join('')||'<span style="color:#999;font-style:italic">Aucun pays — ajoutez-en un ci-dessous</span>';
+
+  // Sessions list
+  const d=TRI_DATA[currentTri];
+  const sessList=document.getElementById('editor-sessions-list');
+  const paysOptions=ALL_PAYS.map(p=>`<option value="${escHtml(p)}">${escHtml(p)}</option>`).join('');
+  sessList.innerHTML=d.sessions.map((r,i)=>{
+    const isPast=isPastSession(r.s);
+    const isToday=isTodaySession(r.s);
+    const cls=isToday?' today':(isPast?' past':'');
+    const wSelect=`<select onchange="updateSessW(${i},this.value)">
+      <option value="">— OFF —</option>
+      ${ALL_PAYS.map(p=>`<option value="${escHtml(p)}" ${r.w===p?'selected':''}>${escHtml(p)}</option>`).join('')}
+    </select>`;
+    const rSelect=`<select onchange="updateSessR(${i},this.value)">
+      <option value="auto" ${r.r==='auto'?'selected':''}>🔄 Auto (W précédent)</option>
+      <option value="">— OFF —</option>
+      ${ALL_PAYS.map(p=>`<option value="${escHtml(p)}" ${r.r===p?'selected':''}>${escHtml(p)}</option>`).join('')}
+    </select>`;
+    return `<div class="editor-sess-row${cls}">
+      <input type="text" value="${escHtml(r.s)}" onchange="updateSessCode(${i},this.value)" placeholder="S14">
+      <input type="text" value="${escHtml(r.d)}" onchange="updateSessDate(${i},this.value)" placeholder="03/04">
+      ${wSelect}
+      ${rSelect}
+      <button class="del-sess" onclick="deleteSession(${i})" title="Supprimer cette session">🗑</button>
+    </div>`;
+  }).join('');
+}
+
+function addPays(){
+  const input=document.getElementById('editor-new-pays');
+  const v=input.value.trim().toUpperCase();
+  if(!v)return;
+  if(ALL_PAYS.includes(v)){alert('Ce pays est déjà dans la liste.');return;}
+  ALL_PAYS.push(v);
+  input.value='';
+  renderEditor();
+}
+
+function removePays(i){
+  const pays=ALL_PAYS[i];
+  if(!confirm(`Retirer "${pays}" de la rotation ?\n\nLes sessions où il est Writer ou Reader seront automatiquement mises en OFF.`))return;
+  ALL_PAYS.splice(i,1);
+  // Nettoyer toutes les références dans les trimestres
+  ['T1','T2','T3','T4'].forEach(t=>{
+    TRI_DATA[t].sessions.forEach(r=>{
+      if(r.w===pays)r.w='';
+      if(r.r===pays)r.r='auto';
+    });
+  });
+  renderEditor();
+}
+
+function updateSessCode(i,v){TRI_DATA[currentTri].sessions[i].s=v.trim().toUpperCase();}
+function updateSessDate(i,v){TRI_DATA[currentTri].sessions[i].d=v.trim();}
+function updateSessW(i,v){TRI_DATA[currentTri].sessions[i].w=v;}
+function updateSessR(i,v){TRI_DATA[currentTri].sessions[i].r=v;}
+
+function deleteSession(i){
+  const r=TRI_DATA[currentTri].sessions[i];
+  if(!confirm(`Supprimer la session ${r.s} (${r.d}) du planning ?`))return;
+  TRI_DATA[currentTri].sessions.splice(i,1);
+  renderEditor();
+}
+
+function addSession(){
+  const d=TRI_DATA[currentTri];
+  // Calcul auto du prochain numéro et de la prochaine date
+  let nextNum=26, nextDate='';
+  if(d.sessions.length>0){
+    const last=d.sessions[d.sessions.length-1];
+    nextNum=sessNum(last.s)+1;
+    // Tentative de calcul : +7 jours par défaut
+    const m=last.d.match(/(\d{1,2})\/(\d{1,2})/);
+    if(m){
+      let day=parseInt(m[1])+7,month=parseInt(m[2]);
+      // Ajustement mensuel approximatif
+      const daysInMonth=[31,28,31,30,31,30,31,31,30,31,30,31];
+      if(day>daysInMonth[month-1]){day-=daysInMonth[month-1];month++;if(month>12)month=1;}
+      nextDate=String(day).padStart(2,'0')+'/'+String(month).padStart(2,'0');
+    }
+  }
+  const wIdx=d.sessions.length % Math.max(ALL_PAYS.length,1);
+  d.sessions.push({
+    s:'S'+nextNum,
+    d:nextDate||'',
+    w:ALL_PAYS[wIdx]||'',
+    r:'auto'
+  });
+  renderEditor();
+}
+
+function savePlanning(){
+  // Validation basique
+  const empty=TRI_DATA[currentTri].sessions.filter(r=>!r.s||!r.d);
+  if(empty.length>0){
+    if(!confirm(`⚠️ ${empty.length} session(s) ont un code ou une date vide.\nEnregistrer quand même ?`))return;
+  }
+  savePlanningState();
+  refreshArchivageDropdowns();
+  renderRecap();
+  alert('✅ Planning enregistré !');
+  toggleEditor();
+}
+
+function resetPlanning(){
+  if(!confirm(`⚠️ Réinitialiser le planning ${currentTri} aux valeurs par défaut ?\n\nToutes vos modifications sur ce trimestre seront perdues.`))return;
+  TRI_DATA[currentTri]=JSON.parse(JSON.stringify(DEFAULT_TRI[currentTri]));
+  savePlanningState();
+  renderEditor();
+}
+
+// Rafraîchit les selects Pays dans la section Archivage quand la liste change
+function refreshArchivageDropdowns(){
+  const selImport=document.getElementById('sel-pays');
+  const selFilter=document.getElementById('flt-pays');
+  if(selImport){
+    const cur=selImport.value;
+    selImport.innerHTML='<option value="">-- Pays --</option>'+ALL_PAYS.map(p=>`<option ${cur===p?'selected':''}>${escHtml(p)}</option>`).join('');
+  }
+  if(selFilter){
+    const cur=selFilter.value;
+    selFilter.innerHTML='<option value="">Tous les pays</option>'+ALL_PAYS.map(p=>`<option ${cur===p?'selected':''}>${escHtml(p)}</option>`).join('');
+  }
+}
+
+function updatePlanningBadges(){
+  ['T1','T2','T3','T4'].forEach(t=>{
+    const el=document.getElementById(t.toLowerCase()+'-arc-badge');
+    if(el){
+      const n=archives[t]?archives[t].length:0;
+      el.textContent=n+' CR archivé'+(n>1?'s':'');
+      el.style.background=n>0?'#e6f9f0':'#f0f0f0';
+      el.style.color=n>0?'#00833a':'#888';
+    }
+  });
+}
+
+// ── TABLEAU RÉCAPITULATIF PLANNING vs CR ──
+let currentRecapTri = 'ALL';
+
+function openRecapPopup(){
+  renderRecap();
+  document.getElementById('recap-ov').classList.add('open');
+}
+function closeRecapPopup(){document.getElementById('recap-ov').classList.remove('open');}
+
+function switchRecapTri(tri){
+  currentRecapTri=tri;
+  document.querySelectorAll('.recap-tri-btn').forEach(b=>b.classList.toggle('active',b.dataset.tri===tri));
+  renderRecap();
+}
+
+function renderRecap(){
+  const body=document.getElementById('recap-body');
+  const tris=currentRecapTri==='ALL'?['T1','T2','T3','T4']:[currentRecapTri];
+
+  // Index des archives par session : pour chaque session, on peut avoir plusieurs CR (un par pays)
+  const archBySess={};
+  ['T1','T2','T3','T4'].forEach(t=>{
+    (archives[t]||[]).forEach(a=>{
+      if(!archBySess[a.sess])archBySess[a.sess]=[];
+      archBySess[a.sess].push(a);
+    });
+  });
+
+  // Construire les lignes
+  let rows=[];
+  let stats={total:0,ok:0,missing:0,waiting:0,pastMissing:0};
+
+  tris.forEach(tri=>{
+    const d=TRI_DATA[tri];
+    if(!d)return;
+    d.sessions.forEach((sess,i)=>{
+      stats.total++;
+      const isPast=isPastSession(sess.s);
+      const isToday=isTodaySession(sess.s);
+      const writer=sess.w||'—';
+      let reader=effectiveReader(d,i)||'—';
+
+      const crList=archBySess[sess.s]||[];
+      // Détermine le statut
+      let statusHtml='', rowCls='';
+      if(isPast)rowCls='row-past';
+      if(isToday)rowCls='row-today';
+
+      if(crList.length>0){
+        statusHtml=`<span class="recap-status recap-ok">✅ ${crList.length} CR archivé${crList.length>1?'s':''}</span>`;
+        stats.ok++;
+      } else if(isPast){
+        statusHtml=`<span class="recap-status recap-past-missing">⏮ Non archivé (passée)</span>`;
+        stats.pastMissing++;
+      } else if(isToday){
+        statusHtml=`<span class="recap-status recap-waiting">🔶 En attente (aujourd'hui)</span>`;
+        stats.waiting++;
+      } else {
+        statusHtml=`<span class="recap-status recap-waiting">⏳ À venir</span>`;
+        stats.waiting++;
+      }
+
+      // Fichiers importés
+      let filesHtml='<span style="color:#bbb;font-style:italic;font-size:11px">—</span>';
+      if(crList.length>0){
+        filesHtml=crList.map(a=>`
+          <div style="display:flex;align-items:center;gap:6px;margin:2px 0">
+            <span class="recap-file-link" onclick="viewCR(${a.id})" title="Voir le contenu">📄 ${escHtml(a.name.length>35?a.name.substring(0,32)+'…':a.name)}</span>
+            <button class="arc-btn" style="padding:1px 5px;font-size:9px" onclick="downloadCR(${a.id})" title="Télécharger le Word">💾</button>
+          </div>
+          <div class="recap-meta">${escHtml(a.pays)} · ${a.date}${a.uploadedBy?' · '+escHtml(a.uploadedBy):''}</div>`).join('');
+      }
+
+      rows.push(`<tr class="${rowCls}">
+        <td><span class="recap-sess">${escHtml(sess.s)}</span>${isToday?'<br><span style="font-size:9px;color:#ff9900;font-weight:800">AUJOURD\'HUI</span>':''}</td>
+        <td><span class="recap-date">${escHtml(sess.d)}</span></td>
+        <td>${writer&&writer!=='—'?`<span class="recap-pays w-tag">W · ${escHtml(writer)}</span>`:'<span class="recap-pays off-tag">OFF</span>'}</td>
+        <td>${reader&&reader!=='—'?`<span class="recap-pays r-tag">R · ${escHtml(reader)}</span>`:'<span class="recap-pays off-tag">—</span>'}</td>
+        <td>${statusHtml}</td>
+        <td>${filesHtml}</td>
+      </tr>`);
+    });
+  });
+
+  body.innerHTML=rows.join('')||'<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;font-style:italic">Aucune session dans le trimestre sélectionné.</td></tr>';
+
+  // Stats header
+  const statsHtml=`
+    <span class="recap-stat"><span class="v">${stats.total}</span>Sessions</span>
+    <span class="recap-stat" style="background:rgba(0,200,100,.25)"><span class="v">${stats.ok}</span>CR archivés ✅</span>
+    <span class="recap-stat" style="background:rgba(255,200,0,.2)"><span class="v">${stats.waiting}</span>À venir ⏳</span>
+    <span class="recap-stat" style="background:rgba(200,200,200,.2)"><span class="v">${stats.pastMissing}</span>Manquants ⚠️</span>
+  `;
+  document.getElementById('recap-stats').innerHTML=statsHtml;
+}
+
+// ── ARCHIVAGE : SÉLECTION + IMPORT ──
+function pickFile(e){
+  const files=Array.from(e.target.files);
+  if(files.length>0){
+    pendingFiles=files;
+    updateDzLabel();
+    autoImport();   // ← déclenche l'import automatique
+  }
+}
+function dropFile(e){
+  e.preventDefault();
+  document.getElementById('dz').classList.remove('drag-over');
+  const files=Array.from(e.dataTransfer.files).filter(f=>f.name.match(/\.docx?$/i));
+  if(files.length>0){
+    pendingFiles=files;
+    updateDzLabel();
+    autoImport();   // ← déclenche l'import automatique
+  }
+}
+
+// Déclenché au changement de select : n'importe que si un fichier est en attente
+function tryAutoImport(){
+  if(pendingFiles.length>0){
+    autoImport();
+  }
+}
+
+// Lance l'import si tri + session + pays sont sélectionnés, sinon alerte l'utilisateur
+function autoImport(){
+  const tri=document.getElementById('sel-tri').value;
+  const sess=document.getElementById('sel-sess').value;
+  const pays=document.getElementById('sel-pays').value;
+  if(!tri||!sess||!pays){
+    const miss=[];
+    if(!tri)miss.push('Trimestre');
+    if(!sess)miss.push('Session');
+    if(!pays)miss.push('Pays');
+    const lbl=document.getElementById('dz-label');
+    lbl.innerHTML=`<strong style="color:#c0392b">⚠️ Sélectionnez d'abord : ${miss.join(' · ')}</strong><br><span style="font-size:11px;color:#888">${pendingFiles.length} fichier(s) en attente</span>`;
+    return;
+  }
+  doImport();
+}
+
+function updateDzLabel(){
+  const lbl=document.getElementById('dz-label');
+  if(pendingFiles.length===1){
+    lbl.innerHTML='<strong>📄 Sélectionné :</strong> '+escHtml(pendingFiles[0].name);
+  } else if(pendingFiles.length>1){
+    lbl.innerHTML='<strong>📄 '+pendingFiles.length+' fichiers sélectionnés</strong><br><span style="font-size:11px;color:#888">'+pendingFiles.map(f=>escHtml(f.name)).join(' · ')+'</span>';
+  } else {
+    lbl.innerHTML='<strong>Cliquez ou glissez vos fichiers Word ici</strong>';
+  }
+}
+
+function animExtract(cb){
+  const bar=document.getElementById('extract-bar');
+  const fill=document.getElementById('bar-fill');
+  const lbl=document.getElementById('extract-label');
+  bar.style.display='block';fill.style.width='0%';
+  const steps=['🔍 Lecture du fichier Word…','📝 Extraction du texte…','🔎 Détection des sections…','✅ Finalisation…'];
+  let pct=0,step=0;
+  const iv=setInterval(()=>{
+    pct=Math.min(pct+Math.random()*18+8,95);
+    fill.style.width=pct+'%';
+    lbl.textContent=steps[Math.min(step++,steps.length-1)];
+    if(pct>=95){
+      clearInterval(iv);
+      fill.style.width='100%';
+      lbl.textContent='✅ Extraction terminée !';
+      setTimeout(()=>{bar.style.display='none';cb();},400);
+    }
+  },250);
+}
+
+async function extractWord(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=async e=>{
+      try{
+        const result=await mammoth.extractRawText({arrayBuffer:e.target.result});
+        resolve(result.value);
+      }catch(err){reject(err);}
+    };
+    reader.onerror=()=>reject(new Error('Lecture du fichier impossible'));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+function parseWordContent(text){
+  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l.length>0);
+  let synthese='',obs='',actions=[];
+  let mode='';
+  lines.forEach(line=>{
+    const up=line.toUpperCase();
+    if(up.includes('SYNTH') || up.includes('RÉSUMÉ') || up.includes('RESUME')){mode='syn';return;}
+    if(up.includes('ACTION')){mode='act';return;}
+    if(up.includes('OBSERVATION') || up.includes('POINT DIVERS') || up.includes('DIVERS')){mode='obs';return;}
+    if(mode==='syn' && line.length>10) synthese+=(synthese?'\n':'')+line;
+    else if(mode==='act' && line.length>5){
+      const clean=line.replace(/^[-•*\d\.\)]+\s*/,'').trim();
+      if(clean.length>5){
+        let resp='',date='',action=clean;
+        const respMatch=clean.match(/[Rr]esponsable\s*[:：]\s*([^,;]+)/);
+        if(respMatch){resp=respMatch[1].trim();action=clean.replace(respMatch[0],'').trim();}
+        const dateMatch=clean.match(/(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/);
+        if(dateMatch){date=dateMatch[1];action=action.replace(dateMatch[0],'').trim();}
+        action=action.replace(/^[-–—:·\s]+/,'').replace(/[-–—:·\s]+$/,'');
+        if(action.length>4) actions.push({action,resp,date});
+      }
+    }
+    else if(mode==='obs' && line.length>5) obs+=(obs?'\n':'')+line;
+  });
+  if(!synthese && lines.length>0){
+    synthese=lines.slice(0,Math.min(6,lines.length)).join('\n');
+  }
+  return {synthese,obs,actions,fullText:text};
+}
+
+async function doImport(){
+  const tri=document.getElementById('sel-tri').value;
+  const sess=document.getElementById('sel-sess').value;
+  const pays=document.getElementById('sel-pays').value;
+  if(!tri||!sess||!pays){alert('Veuillez sélectionner un trimestre, une session et un pays.');return;}
+  if(pendingFiles.length===0){alert('Veuillez sélectionner au moins un fichier Word.');return;}
+
+  const triK=tri.split(' ')[0];
+  // Extraction robuste du code session (gère les préfixes emoji, italic, etc.)
+  const sessMatch=(sess||'').match(/S\d+/);
+  const sessCode=sessMatch?sessMatch[0]:sess.split(' ')[0];
+
+  animExtract(async()=>{
+    let successCount=0, failCount=0;
+    for(const file of pendingFiles){
+      let parsed={synthese:'',obs:'',actions:[],fullText:''};
+      let extracted=true;
+      let arrayBuffer=null;
+      try{
+        // Lire le fichier complet en ArrayBuffer (pour stockage + extraction)
+        arrayBuffer=await file.arrayBuffer();
+        const result=await mammoth.extractRawText({arrayBuffer:arrayBuffer.slice(0)});
+        parsed=parseWordContent(result.value);
+      }catch(e){
+        parsed.synthese='[Extraction impossible — '+e.message+']';
+        parsed.fullText='[Fichier non extractible : '+file.name+']';
+        extracted=false;
+        failCount++;
+      }
+      archiveId++;
+      const meta={
+        id:archiveId,
+        sess:sessCode,
+        name:file.name,
+        size:file.size,
+        pays,
+        tri:triK,
+        date:new Date().toLocaleDateString('fr-FR'),
+        time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+        timestamp:Date.now(),
+        extracted,
+        synthese:parsed.synthese,
+        obs:parsed.obs,
+        actions:parsed.actions,
+        fullText:parsed.fullText,
+        uploadedBy:currentUser?currentUser.name:'—',
+        hasFile:!!arrayBuffer
+      };
+      ensureArchiveBuckets();
+      archives[triK].push(meta);
+      // Sauvegarde dans IndexedDB
+      try{
+        await dbSaveMeta(meta);
+        if(arrayBuffer)await dbSaveFile(archiveId,arrayBuffer,file.name);
+      }catch(e){console.warn('Save IDB error',e);}
+      if(extracted)successCount++;
+    }
+    await saveState();
+    renderArch();
+    const m=document.getElementById('ok-msg');
+    m.textContent=`✅ ${successCount} fichier(s) importé(s)${failCount>0?' · ⚠️ '+failCount+' échec(s) d\'extraction':''}`;
+    m.style.display='block';
+    setTimeout(()=>m.style.display='none',5000);
+    pendingFiles=[];
+    updateDzLabel();
+    document.getElementById('fi').value='';
+  });
+}
+
+async function clearAllArchives(){
+  if(!confirm('⚠️ Cela supprimera DÉFINITIVEMENT toutes les archives de CR (y compris les fichiers Word stockés).\n\nContinuer ?'))return;
+  archives={T1:[],T2:[],T3:[],T4:[]};
+  archiveId=0;
+  try{await dbClearAll();}catch(e){console.warn(e);}
+  await saveState();
+  renderArch();
+}
+
+async function deleteArchive(id){
+  if(!confirm('Supprimer ce CR des archives (y compris son fichier Word) ?'))return;
+  ['T1','T2','T3','T4'].forEach(t=>{
+    archives[t]=archives[t].filter(a=>a.id!==id);
+  });
+  try{await dbDeleteRecord(id);}catch(e){console.warn(e);}
+  await saveState();
+  renderArch();
+}
+
+// ── RENOMMER UN CR (admin uniquement) ──
+async function renameArchive(id){
+  if(!isAdmin){ alert('⛔ Réservé à l\'admin.'); return; }
+  // Trouver le CR
+  let target=null;
+  for(const t of ['T1','T2','T3','T4']){
+    const found=(archives[t]||[]).find(a=>a.id===id);
+    if(found){ target=found; break; }
+  }
+  if(!target){ alert('⚠️ CR introuvable.'); return; }
+
+  const currentName=target.name||'';
+  const newName=prompt('✏️ Nouveau nom du CR :\n(sans changer l\'extension .docx)', currentName);
+  if(newName===null) return;  // Annulation
+
+  const trimmed=newName.trim();
+  if(!trimmed){ alert('⚠️ Le nom ne peut pas être vide.'); return; }
+  if(trimmed===currentName) return;  // Pas de changement
+
+  // Mettre à jour le nom dans les métadonnées
+  target.name=trimmed;
+  try{
+    await dbSaveMeta(target);
+    // Mettre à jour aussi le nom du fichier binaire (pour que le téléchargement utilise le nouveau nom)
+    const rec=await dbGetFile(id);
+    if(rec && rec.data){
+      // Garder l'extension du fichier d'origine si l'utilisateur ne l'a pas mise
+      let finalName=trimmed;
+      if(!/\.(docx?|pdf)$/i.test(finalName)){
+        const oldExt=(rec.name||'').match(/\.(docx?|pdf)$/i);
+        if(oldExt) finalName+=oldExt[0];
+      }
+      await dbSaveFile(id, rec.data, finalName);
+      target.name=finalName;
+      await dbSaveMeta(target);
+    }
+  }catch(e){
+    alert('❌ Erreur lors du renommage : '+e.message);
+    console.error(e);
+    return;
+  }
+  await saveState();
+  renderArch();
+}
+
+// ── TÉLÉCHARGEMENT DU WORD ORIGINAL ──
+async function downloadCR(id){
+  try{
+    // ── MODE PUBLIÉ : charger depuis EMBEDDED_FILES (base64) ──
+    if(PUBLISHED_MODE && window.EMBEDDED_FILES){
+      const f=window.EMBEDDED_FILES[id];
+      if(!f || !f.b64){
+        alert('⚠️ Le fichier Word original n\'est pas inclus dans cette version consultation.\n\nContactez l\'administrateur.');
+        return;
+      }
+      // Reconvertir base64 → ArrayBuffer
+      const binary=atob(f.b64);
+      const bytes=new Uint8Array(binary.length);
+      for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+      const blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;a.download=f.name||'document.docx';
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url),500);
+      return;
+    }
+    // ── MODE NORMAL : charger depuis IndexedDB ──
+    const rec=await dbGetFile(id);
+    if(!rec || !rec.data){
+      alert('⚠️ Fichier original indisponible.\n\nIl a peut-être été importé avant l\'activation de la sauvegarde binaire, ou la base IndexedDB a été nettoyée.');
+      return;
+    }
+    const meta=findArchive(id);
+    const fileName=rec.name||(meta?meta.name:'document.docx');
+    const blob=new Blob([rec.data],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=fileName;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),500);
+  }catch(e){
+    alert('❌ Erreur lors du téléchargement : '+e.message);
+  }
+}
+
+// ── EXPORT / IMPORT GLOBAL (pour migration entre PCs) ──
+async function exportAllArchives(){
+  try{
+    const allMeta=[...archives.T1,...archives.T2,...archives.T3,...archives.T4];
+    if(allMeta.length===0){alert('Aucun CR à exporter.');return;}
+
+    if(!confirm(`Exporter ${allMeta.length} CR (fichiers Word + métadonnées) ?\n\nLe fichier ZIP généré pourra être réimporté sur un autre PC.`))return;
+
+    // Récupérer tous les binaires depuis IndexedDB
+    const zip=new JSZip();
+    const metaOnly=[];
+    const folder=zip.folder('comptes_rendus');
+
+    for(const m of allMeta){
+      const cleanName=`${m.tri}_${m.sess}_${m.pays.replace(/[^a-zA-Z0-9]/g,'_')}_${m.id}_${m.name}`;
+      try{
+        const rec=await dbGetFile(m.id);
+        if(rec && rec.data){
+          folder.file(cleanName,rec.data);
+        }
+      }catch(e){console.warn('skip',m.id,e);}
+      metaOnly.push(m);
+    }
+    // Métadonnées JSON (réimportables)
+    zip.file('metadata.json',JSON.stringify({
+      exportDate:new Date().toISOString(),
+      exportedBy:currentUser?currentUser.name:'—',
+      archiveId,
+      archives:metaOnly,
+      planning:{TRI_DATA,ALL_PAYS}
+    },null,2));
+    // README
+    zip.file('README.txt',`EXPORT ARCHIVES CR 2026
+Date : ${new Date().toLocaleString('fr-FR')}
+Exporté par : ${currentUser?currentUser.name:'—'}
+Nombre de CR : ${allMeta.length}
+
+Pour réimporter cette sauvegarde sur un autre PC :
+1. Ouvrir la plateforme sur l'autre PC
+2. Aller dans "Archivage CR"
+3. Cliquer sur "Importer une sauvegarde"
+4. Sélectionner ce fichier ZIP
+
+Le dossier "comptes_rendus/" contient tous les fichiers Word originaux.
+Le fichier "metadata.json" contient les métadonnées (session, pays, dates, etc.)
+`);
+
+    const blob=await zip.generateAsync({type:'blob'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`export_CR_2026_${new Date().toISOString().slice(0,10)}.zip`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),500);
+  }catch(e){
+    alert('❌ Erreur export : '+e.message);
+  }
+}
+
+async function importAllArchives(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(!confirm(`Importer la sauvegarde "${file.name}" ?\n\n⚠️ Les CR existants seront conservés, les CR du ZIP seront ajoutés (leurs IDs seront réattribués pour éviter les conflits).`)){
+    event.target.value='';return;
+  }
+  try{
+    const zip=await JSZip.loadAsync(file);
+    const metaFile=zip.file('metadata.json');
+    if(!metaFile){alert('❌ Fichier invalide : metadata.json introuvable.');event.target.value='';return;}
+    const metaJson=JSON.parse(await metaFile.async('string'));
+    if(!metaJson.archives){alert('❌ Structure metadata invalide.');event.target.value='';return;}
+
+    // Récupérer les fichiers binaires
+    const folder=zip.folder('comptes_rendus');
+    let added=0, skipped=0;
+
+    for(const oldMeta of metaJson.archives){
+      archiveId++;
+      const newId=archiveId;
+      const newMeta={...oldMeta,id:newId};
+      // Chercher le fichier binaire correspondant dans le ZIP
+      let found=null;
+      zip.folder('comptes_rendus').forEach((path,zf)=>{
+        if(!found && path.includes(`_${oldMeta.id}_`))found=zf;
+      });
+      if(found){
+        try{
+          const ab=await found.async('arraybuffer');
+          await dbSaveFile(newId,ab,oldMeta.name);
+          newMeta.hasFile=true;
+        }catch(e){console.warn('skip file',oldMeta.id);}
+      } else {
+        newMeta.hasFile=false;
+      }
+      await dbSaveMeta(newMeta);
+      if(archives[newMeta.tri])archives[newMeta.tri].push(newMeta);
+      added++;
+    }
+
+    // Optionnel : restaurer le planning s'il est dans le backup
+    if(metaJson.planning && confirm(`Restaurer aussi le planning (rotation pays + sessions) depuis la sauvegarde ?`)){
+      if(metaJson.planning.TRI_DATA)TRI_DATA=metaJson.planning.TRI_DATA;
+      if(metaJson.planning.ALL_PAYS)ALL_PAYS=metaJson.planning.ALL_PAYS;
+      savePlanningState();
+      refreshArchivageDropdowns();
+    }
+
+    await saveState();
+    renderArch();
+    alert(`✅ Import terminé : ${added} CR ajoutés${skipped?' · '+skipped+' ignorés':''}.`);
+  }catch(e){
+    alert('❌ Erreur import : '+e.message);
+  }
+  event.target.value='';
+}
+
+function renderArch(){
+  const fltTri=document.getElementById('flt-tri').value;
+  const fltPays=document.getElementById('flt-pays').value;
+  const fltSearch=(document.getElementById('flt-search').value||'').toLowerCase();
+
+  const tris=fltTri?[fltTri]:['T1','T2','T3','T4'];
+  let totalCount=0;
+  const grid=document.getElementById('arc-grid');
+
+  const html=tris.map(tri=>{
+    const titleMap={T1:'T1 2026 — Janv. · Fév. · Mars (historique)',T2:'T2 2026 — Avril · Mai · Juin',T3:'T3 2026 — Juillet · Août · Sept.',T4:'T4 2026 — Oct. · Nov. · Déc.'};
+    let list=archives[tri]||[];
+    if(fltPays) list=list.filter(a=>a.pays===fltPays);
+    if(fltSearch) list=list.filter(a=>a.name.toLowerCase().includes(fltSearch)||(a.sess||'').toLowerCase().includes(fltSearch));
+    // Tri par session croissante puis date
+    list=list.slice().sort((a,b)=>{
+      const sa=parseInt((a.sess||'S0').replace('S',''))||0;
+      const sb=parseInt((b.sess||'S0').replace('S',''))||0;
+      return sa-sb;
+    });
+    totalCount+=list.length;
+    return `
+      <div class="arc-card">
+        <div class="arc-hd">${titleMap[tri]} <span class="bt">${list.length} CR</span></div>
+        <div class="arc-body">${list.length===0
+          ?'<div class="arc-empty">Aucun CR importé pour ce trimestre.</div>'
+          :list.map(a=>`
+            <div class="arc-entry">
+              <span class="arc-fi">📄</span>
+              <div style="flex:1;min-width:0">
+                <div class="arc-fn" title="${escHtml(a.name)}">${escHtml(a.name)}</div>
+                <div class="arc-fm">${a.sess} · ${escHtml(a.pays)} · ${a.date}${a.uploadedBy?' · par '+escHtml(a.uploadedBy):''}${a.extracted?' · ✅':' · ⚠️'}</div>
+              </div>
+              <div class="arc-actions">
+                <button class="arc-btn" onclick="viewCR(${a.id})">👁 Voir</button>
+                <button class="arc-btn" onclick="downloadCR(${a.id})" title="Télécharger le Word original">💾</button>
+                ${isAdmin?`<button class="arc-btn" onclick="renameArchive(${a.id})" title="Renommer ce CR">✏️</button>`:''}
+                ${isAdmin?`<button class="arc-btn del" onclick="deleteArchive(${a.id})">🗑</button>`:''}
+              </div>
+            </div>`).join('')
+        }</div>
+      </div>`;
+  }).join('');
+
+  grid.innerHTML=html;
+  document.getElementById('stat-count').textContent=totalCount+' CR archivé'+(totalCount>1?'s':'')+' affiché'+(totalCount>1?'s':'');
+  updatePlanningBadges();
+  renderRecap();
+}
+
+function findArchive(id){
+  for(const tri of ['T1','T2','T3','T4']){
+    const a=archives[tri].find(x=>x.id===id);
+    if(a)return a;
+  }
+  return null;
+}
+
+function viewCR(id){
+  const a=findArchive(id);
+  if(!a)return;
+  window._currentViewedCR=id;
+  document.getElementById('cr-pop-title').textContent='📄 '+a.name;
+  document.getElementById('cr-pop-sub').textContent=`${a.sess} · ${a.pays} · ${a.tri} 2026 · importé le ${a.date} à ${a.time||''}`;
+  let content='';
+  if(a.synthese){
+    content+='<div class="cr-section-title">📋 Synthèse</div>'+escHtml(a.synthese);
+  }
+  if(a.actions && a.actions.length>0){
+    content+='<div class="cr-section-title">✅ Actions détectées</div>';
+    content+=a.actions.map((ac,i)=>`${i+1}. ${escHtml(ac.action)}${ac.resp?' — Responsable : <strong>'+escHtml(ac.resp)+'</strong>':''}${ac.date?' — Échéance : '+escHtml(ac.date):''}`).join('\n');
+  }
+  if(a.obs){
+    content+='<div class="cr-section-title">💬 Observations</div>'+escHtml(a.obs);
+  }
+  if(!content && a.fullText){
+    content='<div class="cr-section-title">📄 Contenu brut extrait</div>'+escHtml(a.fullText);
+  }
+  if(!content){
+    content='<em style="color:#888">Aucun contenu extrait.</em>';
+  }
+  document.getElementById('cr-preview-content').innerHTML=content;
+  document.getElementById('cr-ov').classList.add('open');
+}
+function closeCRPopup(){document.getElementById('cr-ov').classList.remove('open');}
+
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ════════════════════════════════════════════════════════════════════
+// 📤 PUBLICATION : génère un fichier HTML autonome figé pour les viewers
+// ════════════════════════════════════════════════════════════════════
+// Ce fichier embarque toutes les métadonnées + les fichiers Word (en base64)
+// directement dans le HTML, et fonctionne sans IndexedDB.
+// Tu uploades ce fichier sur GitHub Pages → tes collègues accèdent par lien.
+async function publishViewerVersion(){
+  if(!isAdmin){ alert('⛔ Réservé à l\'admin.'); return; }
+  try{
+    const allMeta=[...archives.T1,...archives.T2,...archives.T3,...archives.T4];
+    if(allMeta.length===0){
+      if(!confirm('⚠️ Aucun CR archivé. Publier quand même la version consultation (planning vide) ?'))return;
+    }
+
+    const stats={total:allMeta.length,withFile:0,withoutFile:0,totalSize:0};
+
+    if(!confirm(`📤 Générer la version consultation ?\n\n• ${allMeta.length} CR seront figés dans le fichier\n• Les fichiers Word originaux seront intégrés (téléchargeables)\n• Les viewers ne pourront PAS modifier\n• Tu uploades ensuite ce fichier sur GitHub Pages\n\nContinuer ?`))return;
+
+    // Afficher un message de progression
+    const btn=event.target;
+    const origText=btn.textContent;
+    btn.disabled=true;
+    btn.textContent='⏳ Génération en cours...';
+
+    // 1. Récupérer toutes les métadonnées + fichiers binaires
+    const embeddedArchives={T1:[],T2:[],T3:[],T4:[]};
+    const embeddedFiles={};  // id -> { name, base64 }
+
+    for(const meta of allMeta){
+      const cleanMeta={...meta};
+      delete cleanMeta.fileBuffer;
+      embeddedArchives[meta.tri].push(cleanMeta);
+
+      // Tenter de récupérer le fichier binaire
+      try{
+        const rec=await dbGetFile(meta.id);
+        if(rec && rec.data){
+          // Convertir ArrayBuffer en base64
+          const bytes=new Uint8Array(rec.data);
+          let binary='';
+          const chunk=8192;
+          for(let i=0;i<bytes.length;i+=chunk){
+            binary+=String.fromCharCode.apply(null,bytes.subarray(i,i+chunk));
+          }
+          const b64=btoa(binary);
+          embeddedFiles[meta.id]={name:rec.name||meta.name,b64};
+          stats.withFile++;
+          stats.totalSize+=bytes.length;
+        } else {
+          stats.withoutFile++;
+        }
+      }catch(e){
+        console.warn('Pas de binaire pour CR id='+meta.id,e);
+        stats.withoutFile++;
+      }
+    }
+
+    // 2. Récupérer le HTML actuel (le fichier source = celui de l'admin)
+    //    Avant ça : remettre l'état initial pour que les viewers voient bien l'écran de login
+    //    et que les éléments admin-only ne soient pas définitivement marqués display:none.
+    const sourceHtml=(()=>{
+      // Cloner l'élément <html> pour ne pas casser l'état actuel
+      const clone=document.documentElement.cloneNode(true);
+      // Remettre login-screen visible (sans style inline) dans le clone
+      const loginEl=clone.querySelector('#login-screen');
+      if(loginEl)loginEl.removeAttribute('style');
+      // Remettre user-pill par défaut
+      const userPill=clone.querySelector('#user-pill-label');
+      if(userPill)userPill.textContent='👤 Utilisateur';
+      // Retirer les style="display:none" (et autres) ajoutés par applyRolePermissions sur les .admin-only
+      // (ils seront recachés au login viewer dans la copie publiée)
+      clone.querySelectorAll('.admin-only').forEach(el=>{
+        if(el.style && el.style.display==='none')el.style.removeProperty('display');
+      });
+      // Retirer les sections actives sauf la première (planning)
+      // pour que ça reparte de zéro
+      return clone.outerHTML;
+    })();
+
+    // 3. Créer le bloc de données embarquées à injecter
+    const publishDate=new Date().toLocaleString('fr-FR');
+    const embeddedDataScript=`
+<script id="EMBEDDED_DATA_BLOCK">
+// ════════════════════════════════════════════════════════════════════
+// 🔒 DONNÉES PUBLIÉES — VERSION CONSULTATION FIGÉE
+// Générée le : ${publishDate}
+// CR inclus : ${stats.total} (${stats.withFile} avec fichier Word, ${stats.withoutFile} sans)
+// ════════════════════════════════════════════════════════════════════
+window.PUBLISHED_MODE = true;
+window.PUBLISHED_DATE = ${JSON.stringify(publishDate)};
+window.EMBEDDED_ARCHIVES = ${JSON.stringify(embeddedArchives)};
+window.EMBEDDED_FILES = ${JSON.stringify(embeddedFiles)};
+window.EMBEDDED_PLANNING = ${JSON.stringify({TRI_DATA:typeof TRI_DATA!=='undefined'?TRI_DATA:null,ALL_PAYS:typeof ALL_PAYS!=='undefined'?ALL_PAYS:null})};
+<\/script>`;
+
+    // 4. Injecter ce bloc juste avant </head>, et marquer le fichier comme "publié"
+    let publishedHtml=sourceHtml;
+    publishedHtml=publishedHtml.replace('</head>',embeddedDataScript+'\n</head>');
+
+    // 5. Ajouter un bandeau visuel "VERSION CONSULTATION" en haut
+    const banner=`<div id="published-banner" style="background:#00833a;color:#fff;padding:8px 16px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px">🔒 VERSION CONSULTATION — Publiée le ${publishDate} — Lecture seule</div>`;
+    publishedHtml=publishedHtml.replace('<body>','<body>\n'+banner);
+
+    // 6. Modifier le titre
+    publishedHtml=publishedHtml.replace(
+      /<title>[^<]*<\/title>/,
+      '<title>📁 CR 2026 — Consultation</title>'
+    );
+
+    // 7. Déclencher le téléchargement
+    const blob=new Blob(['<!DOCTYPE html>\n'+publishedHtml],{type:'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const today=new Date().toISOString().slice(0,10);
+    a.href=url;
+    a.download=`planning_cr_consultation_${today}.html`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),500);
+
+    btn.disabled=false;
+    btn.textContent=origText;
+
+    const sizeMB=(stats.totalSize/1024/1024).toFixed(2);
+    alert(`✅ Version consultation générée !\n\n📦 ${stats.total} CR inclus\n   • ${stats.withFile} avec fichier Word original (~${sizeMB} MB)\n   • ${stats.withoutFile} sans fichier original\n\n📂 Fichier téléchargé : planning_cr_consultation_${today}.html\n\n👉 Prochaine étape : uploader ce fichier sur GitHub Pages\n   et envoyer le lien à tes collègues.`);
+  }catch(e){
+    alert('❌ Erreur publication : '+e.message);
+    console.error(e);
+  }
+}
+
+// ── INIT ──
+(async()=>{
+  await loadState();
+  ensureArchiveBuckets();
+  // En mode publié : restaurer le planning embarqué
+  if(PUBLISHED_MODE && window.EMBEDDED_PLANNING){
+    if(window.EMBEDDED_PLANNING.TRI_DATA && typeof TRI_DATA!=='undefined'){
+      try{ Object.assign(TRI_DATA, window.EMBEDDED_PLANNING.TRI_DATA); }catch(e){}
+    }
+    if(window.EMBEDDED_PLANNING.ALL_PAYS && typeof ALL_PAYS!=='undefined'){
+      try{ ALL_PAYS.length=0; window.EMBEDDED_PLANNING.ALL_PAYS.forEach(p=>ALL_PAYS.push(p)); }catch(e){}
+    }
+  }
+  loadPlanningState();
+  refreshArchivageDropdowns();
+  renderArch();
+
+  // En mode publié : adapter l'écran de connexion pour les viewers
+  // (ils n'ont besoin de rien d'autre que de saisir leur nom)
+  if(PUBLISHED_MODE){
+    // Cacher le champ mot de passe et la mention « Contactez votre administrateur »
+    const pwdField=document.querySelector('#login-pwd')?.closest('.login-field');
+    if(pwdField)pwdField.style.display='none';
+    const hint=document.querySelector('.login-hint');
+    if(hint)hint.textContent='🔒 Version consultation — Lecture seule';
+    // Adapter le bouton et le titre
+    const btn=document.querySelector('.login-btn');
+    if(btn)btn.textContent='Consulter →';
+    const h3=document.querySelector('.login-box h3');
+    if(h3)h3.innerHTML='👁 Identifiez-vous pour consulter';
+    // Adapter le sous-titre
+    const sub=document.querySelector('.login-sub');
+    if(sub)sub.textContent='Plateforme de consultation des comptes rendus 2026';
+  }
+})();
+
+// En mode publié, on remplace doLogin par une version simplifiée (juste le nom suffit)
+// On wrap l'ancienne fonction pour que ça marche dans les deux modes
+const _originalDoLogin = doLogin;
+doLogin = function(){
+  if(PUBLISHED_MODE){
+    const name = document.getElementById('login-name').value.trim();
+    const err  = document.getElementById('login-err');
+    if(!name){ err.textContent='⚠️ Veuillez saisir votre nom.'; return; }
+    isAdmin = false;
+    currentUser = { name, role:'viewer' };
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('user-pill-label').textContent = '👤 '+name+' (Lecture)';
+    document.getElementById('login-err').textContent='';
+    applyRolePermissions();
+    return;
+  }
+  return _originalDoLogin();
+};
+</script>
+</body>
+</html>
